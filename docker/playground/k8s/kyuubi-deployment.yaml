@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f compose.yml -o ./k8s
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: kyuubi
+  name: kyuubi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: kyuubi
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f compose.yml -o ./k8s
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: kyuubi
+    spec:
+      containers:
+        - image: nekyuubi/kyuubi-playground-kyuubi:1.6.0-incubating
+          name: kyuubi
+          ports:
+            - containerPort: 4040
+            - containerPort: 4041
+            - containerPort: 4042
+            - containerPort: 4043
+            - containerPort: 4044
+            - containerPort: 4045
+            - containerPort: 4046
+            - containerPort: 4047
+            - containerPort: 4048
+            - containerPort: 4049
+            - containerPort: 4050
+            - containerPort: 10009
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/hadoop/conf/core-site.xml
+              name: kyuubi-claim0
+              subPath: core-site.xml
+            - mountPath: /etc/hive/conf/hive-site.xml
+              name: kyuubi-claim1
+              subPath: hive-site.xml
+            - mountPath: /etc/spark/conf/spark-defaults.conf
+              name: kyuubi-claim2
+              subPath: spark-defaults.conf
+            - mountPath: /etc/kyuubi/conf/kyuubi-defaults.conf
+              name: kyuubi-claim3
+              subPath: kyuubi-defaults.conf
+            - mountPath: /etc/kyuubi/conf/log4j2.xml
+              name: kyuubi-claim4
+              subPath: kyuubi-log4j2.xml
+            - mountPath: /opt/load_data/load-dataset-tpcds-tiny.sql
+              name: kyuubi-claim5
+              subPath: load-dataset-tpcds-tiny.sql
+            - mountPath: /opt/load_data/load-dataset-tpch-tiny.sql
+              name: kyuubi-claim6
+              subPath: load-dataset-tpch-tiny.sql
+      hostname: kyuubi
+      restartPolicy: Always
+      volumes:
+        - name: kyuubi-claim0
+          configMap:
+            name: core-site.xml
+        - name: kyuubi-claim1
+          configMap:
+            name: hive-site.xml
+        - name: kyuubi-claim2
+          configMap:
+            name: spark-defaults.conf
+        - name: kyuubi-claim3
+          configMap:
+            name: kyuubi-defaults.conf
+        - name: kyuubi-claim4
+          configMap:
+            name: kyuubi-log4j2.xml
+        - name: kyuubi-claim5
+          configMap:
+            name: load-dataset-tpcds-tiny.sql
+        - name: kyuubi-claim6
+          configMap:
+            name: load-dataset-tpch-tiny.sql
+status: {}

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f compose.yml -o ./k8s
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: metastore
+  name: metastore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: metastore
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f compose.yml -o ./k8s
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: metastore
+    spec:
+      containers:
+        - image: nekyuubi/kyuubi-playground-metastore:1.6.0-incubating
+          name: metastore
+          ports:
+            - containerPort: 9083
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/hadoop/conf/core-site.xml
+              name: metastore-claim0
+              subPath: core-site.xml
+            - mountPath: /etc/hive/conf/hive-site.xml
+              name: metastore-claim1
+              subPath: hive-site.xml
+      hostname: metastore
+      restartPolicy: Always
+      volumes:
+        - name: metastore-claim0
+          configMap:
+            name: core-site.xml
+        - name: metastore-claim1
+          configMap:
+            name: hive-site.xml
+status: {}

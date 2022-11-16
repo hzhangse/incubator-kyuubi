@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f compose.yml -o ./k8s
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: minio
+  name: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: minio
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f compose.yml -o ./k8s
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: minio
+    spec:
+      containers:
+        - env:
+            - name: MINIO_DEFAULT_BUCKETS
+              value: spark-bucket,iceberg-bucket
+            - name: MINIO_ROOT_PASSWORD
+              value: minio_minio
+            - name: MINIO_ROOT_USER
+              value: minio
+          image: alekcander/bitnami-minio-multiarch:RELEASE.2022-05-26T05-48-41Z
+          name: minio
+          ports:
+            - containerPort: 9000
+            - containerPort: 9001
+          resources: {}
+      hostname: minio
+      restartPolicy: Always
+status: {}

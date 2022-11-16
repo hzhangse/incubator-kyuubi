@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f compose.yml -o ./k8s
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: postgres
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: postgres
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f compose.yml -o ./k8s
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: postgres
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: metastore
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+          image: postgres:12
+          name: postgres
+          ports:
+            - containerPort: 5432
+          resources: {}
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d/hive-schema-2.3.0.postgres.sql
+              name: postgres-claim0
+              subPath: hive-schema-2.3.0.postgres.sql
+            - mountPath: /docker-entrypoint-initdb.d/hive-txn-schema-2.3.0.postgres.sql
+              name: postgres-claim1
+              subPath: hive-txn-schema-2.3.0.postgres.sql
+      hostname: postgres
+      restartPolicy: Always
+      volumes:
+        - name: postgres-claim0
+          configMap:
+            name: hive-schema-2.3.0.postgres.sql
+        - name: postgres-claim1
+          configMap:
+            name: hive-txn-schema-2.3.0.postgres.sql
+status: {}

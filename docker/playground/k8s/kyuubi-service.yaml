@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f compose.yml -o ./k8s
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: kyuubi
+  name: kyuubi
+spec:
+  ports:
+    - name: "4040"
+      port: 4040
+      targetPort: 4040
+    - name: "4041"
+      port: 4041
+      targetPort: 4041
+    - name: "4042"
+      port: 4042
+      targetPort: 4042
+    - name: "4043"
+      port: 4043
+      targetPort: 4043
+    - name: "4044"
+      port: 4044
+      targetPort: 4044
+    - name: "4045"
+      port: 4045
+      targetPort: 4045
+    - name: "4046"
+      port: 4046
+      targetPort: 4046
+    - name: "4047"
+      port: 4047
+      targetPort: 4047
+    - name: "4048"
+      port: 4048
+      targetPort: 4048
+    - name: "4049"
+      port: 4049
+      targetPort: 4049
+    - name: "4050"
+      port: 4050
+      targetPort: 4050
+    - name: "10009"
+      port: 10009
+      targetPort: 10009
+  selector:
+    io.kompose.service: kyuubi
+status:
+  loadBalancer: {}
