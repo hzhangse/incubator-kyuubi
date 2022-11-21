@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f compose.yml -o ./k8s
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: zeppelin
+  name: zeppelin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: zeppelin
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f compose.yml -o ./k8s
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: zeppelin
+    spec:
+      containers:
+        - env:
+            - name: MINIO_DEFAULT_BUCKETS
+              value: spark-bucket,iceberg-bucket
+          image: apache/zeppelin:0.10.0
+          name: minio
+          ports:
+            - containerPort: 8080
+          resources: {}
+      hostname: zeppelin
+      restartPolicy: Always
+status: {}

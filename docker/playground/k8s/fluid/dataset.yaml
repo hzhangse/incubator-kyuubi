@@ -1,0 +1,23 @@
+apiVersion: data.fluid.io/v1alpha1
+kind: Dataset
+metadata:
+  name: s3demo
+spec:
+  mounts:
+    - mountPoint: s3a://spark-bucket
+      name: spark
+      options:
+        alluxio.underfs.s3.endpoint: http://minio:9000
+        alluxio.underfs.s3.disable.dns.buckets: "true"
+        alluxio.underfs.s3.inherit.acl: "false"
+      encryptOptions:
+      - name: aws.accessKeyId
+        valueFrom:
+          secretKeyRef:
+            name: s3secret
+            key: s3.accessKeyId
+      - name: aws.secretKey
+        valueFrom:
+          secretKeyRef:
+            name: s3secret
+            key: s3.secretKey

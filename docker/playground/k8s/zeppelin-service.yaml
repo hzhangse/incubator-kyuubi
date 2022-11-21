@@ -6,14 +6,14 @@ metadata:
     kompose.version: 1.26.1 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: metastore
-  name: metastore-svc
+    io.kompose.service: zeppelin
+  name: zeppelin-svc
 spec:
   ports:
-    - name: "9083"
-      port: 9083
-      targetPort: 9083
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
   selector:
-    io.kompose.service: metastore
+    io.kompose.service: zeppelin
 status:
   loadBalancer: {}

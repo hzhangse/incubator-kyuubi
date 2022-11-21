@@ -16,6 +16,10 @@ kubectl create configmap load-dataset-tpcds-tiny.sql --from-file=./image/load-da
 
 kubectl create configmap spark-defaults.conf --from-file=./image/spark-defaults.conf -n kyuubi
 
+
+kubectl create serviceaccount spark -n kyuubi
+
+kubectl create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=kyuubi:spark --namespace=kyuubi
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1

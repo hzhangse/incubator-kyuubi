@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+#version:  "2"
 services:
   minio:
     image: alekcander/bitnami-minio-multiarch:RELEASE.2022-05-26T05-48-41Z
