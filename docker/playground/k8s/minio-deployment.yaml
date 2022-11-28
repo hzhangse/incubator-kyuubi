@@ -23,6 +23,10 @@ spec:
       labels:
         io.kompose.service: minio
     spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: minio         
       containers:
         - env:
             - name: MINIO_DEFAULT_BUCKETS
@@ -33,10 +37,32 @@ spec:
               value: minio
           image: alekcander/bitnami-minio-multiarch:RELEASE.2022-05-26T05-48-41Z
           name: minio
+          securityContext:
+            runAsUser: 1001
+            runAsNonRoot: true              
           ports:
             - containerPort: 9000
             - containerPort: 9001
           resources: {}
+          volumeMounts:
+            - name: data
+              mountPath: /data          
       hostname: minio
       restartPolicy: Always
-status: {}
+      securityContext:
+        fsGroup: 1001   
+
+--- 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio
+spec:
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 500Mi
+  storageClassName: longhorn
+  accessModes:
+    - ReadWriteOnce
+    

@@ -48,7 +48,27 @@ ${BUILD_CMD} \
   --build-arg SPARK_VERSION=${SPARK_VERSION} \
   --build-arg SPARK_BINARY_VERSION=${SPARK_BINARY_VERSION} \
   --file "${SELF_DIR}/image/kyuubi-playground-spark.Dockerfile" \
-  --tag registry.cn-shanghai.aliyuncs.com/kyligence/spark:${KYUUBI_VERSION} \
+  --tag registry.cn-shanghai.aliyuncs.com/kyligence/spark:1.6.1-incubating   \
   "${SELF_DIR}/image" $@
 
+
+# ${BUILD_CMD} \
+#   --build-arg APACHE_MIRROR=${APACHE_MIRROR} \
+#   --build-arg MAVEN_MIRROR=${MAVEN_MIRROR} \
+#   --build-arg KYUUBI_VERSION=${KYUUBI_VERSION} \
+#   --build-arg AWS_JAVA_SDK_VERSION=${AWS_JAVA_SDK_VERSION} \
+#   --build-arg KYUUBI_HADOOP_VERSION=${KYUUBI_HADOOP_VERSION} \
+#   --file "${SELF_DIR}/image/kyuubi-playground-kyuubi-alluxio.Dockerfile" \
+#   --tag registry.cn-shanghai.aliyuncs.com/kyligence/kyuubi:${KYUUBI_VERSION} \
+#   "${SELF_DIR}/image" $@
+ 
+
+# ${BUILD_CMD} \
+#   --build-arg APACHE_MIRROR=${APACHE_MIRROR} \
+#   --build-arg MAVEN_MIRROR=${MAVEN_MIRROR} \
+#   --build-arg KYUUBI_VERSION=${KYUUBI_VERSION} \
+#   --build-arg HIVE_VERSION=${HIVE_VERSION} \
+#   --file "${SELF_DIR}/image/kyuubi-playground-metastor-alluxio.Dockerfile" \
+#   --tag registry.cn-shanghai.aliyuncs.com/kyligence/kyuubi-playground-metastore:${KYUUBI_VERSION} \
+#   "${SELF_DIR}/image" $@
 

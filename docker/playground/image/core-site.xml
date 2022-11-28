@@ -45,4 +45,12 @@
         <name>fs.defaultFS</name>
         <value>s3a://spark-bucket/</value>
     </property>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>alluxio://s3demo1-master-0.kyuubi:21079/</value>
+    </property>
+    <property>
+      <name>fs.alluxio.impl</name>
+      <value>alluxio.hadoop.FileSystem</value>
+    </property>
 </configuration>

@@ -36,3 +36,9 @@ spec:
  
  ---
   
+ ./bin/alluxio  fs mount --shared /spark s3a://spark-bucket/warehouse \
+  --option alluxio.underfs.s3.disable.dns.buckets=true \
+  --option alluxio.underfs.s3.endpoint=http://minio:9000 \
+  --option alluxio.underfs.s3.inherit.acl=false \
+  --option aws.accessKeyId=minio \
+  --option aws.secretKey=minio_minio 

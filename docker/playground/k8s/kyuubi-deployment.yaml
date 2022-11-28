@@ -25,7 +25,7 @@ spec:
         io.kompose.service: kyuubi
     spec:
       containers:
-        - image: nekyuubi/kyuubi-playground-kyuubi:1.6.0-incubating
+        - image: registry.cn-shanghai.aliyuncs.com/kyligence/kyuubi:1.6.1-incubating
           name: kyuubi
           ports:
             - containerPort: 4040

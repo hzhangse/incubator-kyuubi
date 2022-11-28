@@ -1,10 +1,10 @@
 apiVersion: data.fluid.io/v1alpha1
 kind: Dataset
 metadata:
-  name: s3demo
+  name: s3demo1
 spec:
   mounts:
-    - mountPoint: s3a://spark-bucket
+    - mountPoint: s3a://spark-bucket/warehouse
       name: spark
       options:
         alluxio.underfs.s3.endpoint: http://minio:9000
@@ -21,3 +21,17 @@ spec:
           secretKeyRef:
             name: s3secret
             key: s3.secretKey
+--- 
+apiVersion: data.fluid.io/v1alpha1
+kind: AlluxioRuntime
+metadata:
+  name: s3demo1
+spec:
+  replicas: 1
+  tieredstore:
+    levels:
+      - mediumtype: MEM
+        path: /dev/shm
+        quota: 500M
+        high: "0.95"
+        low: "0.7"            

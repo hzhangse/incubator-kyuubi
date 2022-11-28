@@ -1,13 +1,13 @@
 apiVersion: data.fluid.io/v1alpha1
 kind: AlluxioRuntime
 metadata:
-  name: s3demo
+  name: s3demo1
 spec:
   replicas: 1
   tieredstore:
     levels:
       - mediumtype: MEM
         path: /dev/shm
-        quota: 20M
+        quota: 500M
         high: "0.95"
         low: "0.7"
