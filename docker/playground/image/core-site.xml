@@ -17,7 +17,7 @@
   -->
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
-    <property>
+    <!-- <property>
         <name>fs.s3a.access.key</name>
         <value>minio</value>
     </property>
@@ -44,10 +44,10 @@
     <property>
         <name>fs.defaultFS</name>
         <value>s3a://spark-bucket/</value>
-    </property>
+    </property> -->
     <property>
         <name>fs.defaultFS</name>
-        <value>alluxio://s3demo1-master-0.kyuubi:21079/</value>
+        <value>alluxio://s3demo1-master-0.kyuubi:21079/spark/</value>
     </property>
     <property>
       <name>fs.alluxio.impl</name>
